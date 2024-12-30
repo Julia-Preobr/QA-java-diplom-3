@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import pages.HomePage;
 import pages.LoginPage;
 import web.BrowserType;
 
@@ -33,9 +34,8 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage(driver);
     }
 
-    @Test
-    @DisplayName("Успешный вход тестовым пользователем")
-    public void testSuccessfulLogin() {
+    @Step("Вход с тестовым пользователем")
+    public void testUserLogin() {
         // Вводим правильные данные для входа
         loginPage.enterEmail(testLogin.getEmail());
         loginPage.enterPassword(testLogin.getPassword());
@@ -43,9 +43,22 @@ public class LoginTest extends BaseTest {
         // Нажимаем кнопку "Войти"
         loginPage.clickLogin();
 
-        // Проверяем, что успешный вход приводит к переходу на нужную страницу
-        // Например, проверка наличия элемента на странице после входа
-        assertTrue("User is not logged in", driver.getCurrentUrl().contains("expectedPageAfterLogin"));
+        loginPage.waitForPurchase();
+    }
+
+    @Step("На главной странице нажать \"Войти в аккаунт\"")
+    private void profilePageEnterToAccount() {
+        loginPage.goToHomePage();
+        HomePage homePage = new PageFactory().createHomePage();
+        homePage.clickToAccountLogin();
+    }
+
+    @Test
+    @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
+    public void testSuccessfulLogin() {
+        profilePageEnterToAccount();
+
+        testUserLogin();
     }
 
     @Test

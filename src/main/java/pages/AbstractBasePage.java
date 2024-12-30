@@ -3,11 +3,16 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public abstract class AbstractBasePage {
     protected WebDriver driver;
+
+    protected WebDriverWait wait;
 
     //Логотип "Stellar Burgers"
     protected final By enterButton = By.xpath(".//div/a[@href='/']");
@@ -18,6 +23,7 @@ public abstract class AbstractBasePage {
 
     public AbstractBasePage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public WebElement findElement(By locator) {
@@ -38,6 +44,10 @@ public abstract class AbstractBasePage {
 
     public String getText(By locator) {
         return findElement(locator).getText();
+    }
+
+    public void waitForVisibility(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     // Переход на главную страницу (логотип Stellar Burgers)

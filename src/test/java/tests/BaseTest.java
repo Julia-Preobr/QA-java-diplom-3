@@ -6,7 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import pages.HomePage;
+import pages.LoginPage;
+import pages.ProfilePage;
 import web.BrowserType;
 import web.WebDriverFactory;
 
@@ -53,5 +55,19 @@ public class BaseTest {
                 {BrowserType.CHROME},
                 {BrowserType.YANDEX}
         });
+    }
+
+    public class PageFactory {
+        public LoginPage createLoginPage() {
+            return new LoginPage(driver);
+        }
+
+        public HomePage createHomePage() {
+            return new HomePage(driver);
+        }
+
+        public ProfilePage createProfilePage() {
+            return new ProfilePage(driver);
+        }
     }
 }
