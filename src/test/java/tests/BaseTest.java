@@ -1,70 +1,43 @@
 package tests;
 
 import data.Login;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
+import io.qameta.allure.Step;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import web.BrowserType;
+import web.WebDriverFactory;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
+    private static final String APP_USER = "преображенская_11@gmail.com";
+    private static final String APP_PASSWORD = "123456789";
 
-    protected Browser browser;
+    protected static Login testLogin = new Login(APP_USER, APP_PASSWORD);
 
-    private Configuration configuration;
+    protected BrowserType browserType;
+
     protected WebDriver driver;
-    protected Login testLogin;
 
-    public BaseTest(Browser browser) throws ConfigurationException {
-        this.browser = browser;
-
-        Configurations configurations = new Configurations();
-        this.configuration = configurations.properties(
-                getClass().getResource("tests.properties")
-        );
-        this.testLogin = new Login(
-                this.configuration.getString("app.user"),
-                this.configuration.getString("app.password")
-        );
-    }
-
-    @BeforeClass
-    public static void setupClass() {
-        WebDriverManager.chromedriver().setup();
+    public BaseTest(BrowserType browserType) {
+        this.browserType = browserType;
     }
 
     @Before
     public void setUp() {
-        if (browser == Browser.CHROME) {
-            System.setProperty("webdriver.chrome.driver", readProperty("chrome.path"));
-            driver = new ChromeDriver();
-        } else if (browser == Browser.YANDEX) {
-            System.setProperty("webdriver.gecko.driver", readProperty("yandex.path"));
-            driver = new ChromeDriver();
-        }
-
-        // Настройка для Chrome
-        driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-        driver.get("https://stellarburgers.nomoreparties.site");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        initDriver(this.browserType);
     }
 
-    protected String readProperty(String name) {
-        Assert.assertNotNull("Не найден файл свойств tests.properties", configuration);
-
-        return configuration.getString(name);
+    @Step("Инициализация драйвера, браузер: {0}")
+    protected void initDriver(BrowserType browserType) {
+        driver = WebDriverFactory.createDriver(browserType);
+        driver.get("https://stellarburgers.nomoreparties.site/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @After
@@ -74,16 +47,11 @@ public class BaseTest {
         }
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Запуск в браузере {0}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Browser.CHROME},
-                {Browser.YANDEX}
+                {BrowserType.CHROME},
+                {BrowserType.YANDEX}
         });
     }
-
-    public enum Browser {
-        CHROME, YANDEX
-    }
 }
-

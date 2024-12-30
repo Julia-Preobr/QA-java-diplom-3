@@ -1,24 +1,26 @@
 package tests;
 
 import io.qameta.allure.Step;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import pages.RegistrationPage;
+import web.BrowserType;
 
 @RunWith(Parameterized.class)
 public class RegistrationTest extends BaseTest {
 
     private RegistrationPage registrationPage;
 
-    public RegistrationTest(Browser browser) throws ConfigurationException {
-        super(browser);
+    public RegistrationTest(BrowserType browserType) {
+        super(browserType);
     }
 
     @Before
     public void setUp() {
+        super.setUp();
+
         registrationPage = new RegistrationPage(driver);
     }
 

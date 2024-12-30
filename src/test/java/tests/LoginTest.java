@@ -1,12 +1,14 @@
 package tests;
 
-import org.apache.commons.configuration2.ex.ConfigurationException;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import pages.LoginPage;
+import web.BrowserType;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,16 +17,24 @@ public class LoginTest extends BaseTest {
 
     private LoginPage loginPage;
 
-    public LoginTest(Browser browser) throws ConfigurationException {
-        super(browser);
+    public LoginTest(BrowserType browserType) {
+        super(browserType);
     }
 
     @Before
     public void setUp() {
+        super.setUp();
+
+        initPages();
+    }
+
+    @Step("Инициализация объектов страниц")
+    protected void initPages() {
         loginPage = new LoginPage(driver);
     }
 
     @Test
+    @DisplayName("Успешный вход тестовым пользователем")
     public void testSuccessfulLogin() {
         // Вводим правильные данные для входа
         loginPage.enterEmail(testLogin.getEmail());
@@ -92,5 +102,7 @@ public class LoginTest extends BaseTest {
     public void tearDown() {
         // Закрытие браузера после выполнения тестов
         driver.quit();
+
+        super.tearDown();
     }
 }

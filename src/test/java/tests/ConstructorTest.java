@@ -1,7 +1,6 @@
 package tests;
 
 import io.qameta.allure.Step;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,18 +8,21 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import pages.ConstructorPage;
+import web.BrowserType;
 
 @RunWith(Parameterized.class)
 public class ConstructorTest extends BaseTest {
 
     private ConstructorPage constructorPage;
 
-    public ConstructorTest(Browser browser) throws ConfigurationException {
-        super(browser);
+    public ConstructorTest(BrowserType browserType) {
+        super(browserType);
     }
 
     @Before
     public void setUp() {
+        super.setUp();
+
         constructorPage = new ConstructorPage(driver);
     }
 
