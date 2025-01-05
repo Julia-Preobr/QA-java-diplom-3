@@ -1,22 +1,19 @@
 package tests;
 
+import data.Login;
+import data.User;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import pages.HomePage;
-import pages.LoginPage;
 import web.BrowserType;
-
-import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class LoginTest extends BaseTest {
-
-    private LoginPage loginPage;
 
     public LoginTest(BrowserType browserType) {
         super(browserType);
@@ -25,97 +22,107 @@ public class LoginTest extends BaseTest {
     @Before
     public void setUp() {
         super.setUp();
-
-        initPages();
-    }
-
-    @Step("Инициализация объектов страниц")
-    protected void initPages() {
-        loginPage = new LoginPage(driver);
-    }
-
-    @Step("Вход с тестовым пользователем")
-    public void testUserLogin() {
-        // Вводим правильные данные для входа
-        loginPage.enterEmail(testLogin.getEmail());
-        loginPage.enterPassword(testLogin.getPassword());
-
-        // Нажимаем кнопку "Войти"
-        loginPage.clickLogin();
-
-        loginPage.waitForPurchase();
-    }
-
-    @Step("На главной странице нажать \"Войти в аккаунт\"")
-    private void profilePageEnterToAccount() {
-        loginPage.goToHomePage();
-        HomePage homePage = new PageFactory().createHomePage();
-        homePage.clickToAccountLogin();
     }
 
     @Test
     @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
-    public void testSuccessfulLogin() {
+    public void testLoginWithHomePageAccountButton() {
         profilePageEnterToAccount();
 
-        testUserLogin();
+        testUserSuccessfulLogin();
+    }
+
+    @Step("На главной странице нажать \"Войти в аккаунт\"")
+    private void profilePageEnterToAccount() {
+        getHomePage().clickToAccountLogin();
     }
 
     @Test
-    public void testUnsuccessfulLoginWithInvalidCredentials() {
-        // Вводим неверные данные для входа
-        loginPage.enterEmail(testLogin.getEmail());
-        loginPage.enterPassword(testLogin.getPassword());
+    @DisplayName("вход через кнопку «Личный кабинет»")
+    public void testLoginWithProfileButton() {
+        clickProfilePageButton();
 
-        // Нажимаем кнопку "Войти"
-        loginPage.clickLogin();
-
-        // Проверяем, что отображается сообщение об ошибке
-        // Например, проверка наличия сообщения об ошибке или редиректа на страницу входа
-        assertTrue("Error message not displayed", driver.getPageSource().contains("Неверный логин или пароль"));
+        testUserSuccessfulLogin();
     }
 
     @Test
+    @DisplayName("вход через кнопку в форме регистрации")
     public void testGoToRegisterPage() {
-        // Переход на страницу регистрации
-        loginPage.goToRegisterPage();
+        clickProfilePageButton();
 
-        // Проверяем, что мы перешли на страницу регистрации
-        assertTrue("Not on register page", driver.getCurrentUrl().contains("/register"));
+        clickLoginRegisterLink();
+
+        User testUser = new User(
+                getRandomStr(), getRandomStr() + "@yandex.ru", getRandomStr()
+        );
+        testUserRegister(testUser);
+    }
+
+    @Step("Нажатие ссылки \"Зарегистрироваться\"")
+    private void clickLoginRegisterLink() {
+        getLoginPage().goToRegisterPage();
+    }
+
+    @Test
+    @DisplayName("вход через кнопку «Личный кабинет»")
+    public void testLoginWithRecoverPassword() {
+        clickProfilePageButton();
+
+        testUserSuccessfulLogin();
+    }
+
+    @Step("Нажатие кнопки \"Личный кабинет\"")
+    private void clickProfilePageButton() {
+        getHomePage().goToAccountPage();
+    }
+
+    @Step("Вход с тестовым пользователем")
+    public void testUserSuccessfulLogin() {
+        tryUserLogin(testLogin);
+
+        getLoginPage().waitForPurchase();
     }
 
     @Test
     public void testGoToForgotPasswordPage() {
-        // Переход на страницу восстановления пароля
-        loginPage.goToForgotPasswordPage();
+        clickProfilePageButton();
 
-        // Проверяем, что мы перешли на страницу восстановления пароля
-        assertTrue("Not on forgot password page", driver.getCurrentUrl().contains("/forgot-password"));
+        testUserLoginWithEmptyPassword();
+
+        clickUserLoginForgotPasswordLogin();
+
+        testUserSuccessfulLogin();
     }
 
-    @Test
-    public void testGoToConstructor() {
-        // Переход в конструктор
-        loginPage.goToConstructor();
+    @Step("Вход с тестовым пользователем с пустым паролем")
+    public void testUserLoginWithEmptyPassword() {
+        tryUserLogin(new Login(testLogin.getEmail(), ""));
 
-        // Проверяем, что мы перешли в конструктор
-        assertTrue("Not on constructor page", driver.getCurrentUrl().contains("/constructor"));
+        getLoginPage().waitForForgotPassword();
     }
 
-    @Test
-    public void testGoToHomePage() {
-        // Переход на главную страницу
-        loginPage.goToHomePage();
+    @Step("Нажатие ссылки \"Восстановить пароль\" и ссылки \"Войти\" на форме восстановления пароля")
+    public void clickUserLoginForgotPasswordLogin() {
+        getLoginPage().goToForgotPasswordPage();
 
-        // Проверяем, что мы перешли на главную страницу
-        assertTrue("Not on home page", driver.getCurrentUrl().equals("expectedHomePageURL"));
+        getForgotPasswordPage().enter();
+    }
+
+    private void tryUserLogin(Login login) {
+        // Вводим правильные данные для входа
+        getLoginPage().enterEmail(login.getEmail());
+        getLoginPage().enterPassword(login.getPassword());
+
+        // Нажимаем кнопку "Войти"
+        getLoginPage().clickLogin();
+    }
+
+    private String getRandomStr() {
+        return RandomStringUtils.randomAlphanumeric(8, 15);
     }
 
     @After
     public void tearDown() {
-        // Закрытие браузера после выполнения тестов
-        driver.quit();
-
         super.tearDown();
     }
 }

@@ -19,4 +19,9 @@ public class User extends Login {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return name + " (email: " + getEmail() + ")";
+    }
 }

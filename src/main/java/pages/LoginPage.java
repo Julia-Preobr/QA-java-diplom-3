@@ -34,11 +34,6 @@ public class LoginPage extends AbstractBasePage {
         clickElement(loginButton);
     }
 
-    // Регистрируем пользователя
-    public void register() {
-        clickElement(registerLink);
-    }
-
     // Вводим email в поле "Email"
     public void enterEmail(String email) {
         sendKeys(emailField, email);
@@ -57,5 +52,10 @@ public class LoginPage extends AbstractBasePage {
     // Проверить наличие кнопки "Оформить заказ"
     public void waitForPurchase() {
         waitForVisibility(purchaseButton);
+    }
+
+    // Проверить наличие кнопки "Оформить заказ"
+    public void waitForForgotPassword() {
+        waitForVisibility(forgotPasswordLink);
     }
 }

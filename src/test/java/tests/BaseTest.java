@@ -1,14 +1,13 @@
 package tests;
 
 import data.Login;
+import data.User;
 import io.qameta.allure.Step;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import pages.HomePage;
-import pages.LoginPage;
-import pages.ProfilePage;
+import pages.*;
 import web.BrowserType;
 import web.WebDriverFactory;
 
@@ -26,6 +25,12 @@ public class BaseTest {
 
     protected WebDriver driver;
 
+    private LoginPage loginPage;
+    private HomePage homePage;
+    private RegistrationPage registrationPage;
+    private ProfilePage profilePage;
+    private ForgotPasswordPage forgotPasswordPage;
+
     public BaseTest(BrowserType browserType) {
         this.browserType = browserType;
     }
@@ -42,11 +47,54 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
+    @Step("Регистрация пользователя: {0}")
+    public void testUserRegister(User user) {
+        getRegistrationPage().enterEmail(user.getEmail());
+        getRegistrationPage().enterPassword(user.getPassword());
+        getRegistrationPage().enterName(user.getName());
+        getRegistrationPage().clickRegister();
+    }
+
     @After
     public void tearDown() {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    protected LoginPage getLoginPage() {
+        if (loginPage == null) {
+            loginPage = new LoginPage(driver);
+        }
+        return loginPage;
+    }
+
+    public HomePage getHomePage() {
+        if (homePage == null) {
+            homePage = new HomePage(driver);
+        }
+        return homePage;
+    }
+
+    public RegistrationPage getRegistrationPage() {
+        if (registrationPage == null) {
+            registrationPage = new RegistrationPage(driver);
+        }
+        return registrationPage;
+    }
+
+    public ProfilePage getProfilePage() {
+        if (profilePage == null) {
+            profilePage = new ProfilePage(driver);
+        }
+        return profilePage;
+    }
+
+    public ForgotPasswordPage getForgotPasswordPage() {
+        if (forgotPasswordPage == null) {
+            forgotPasswordPage = new ForgotPasswordPage(driver);
+        }
+        return forgotPasswordPage;
     }
 
     @Parameterized.Parameters(name = "Запуск в браузере {0}")
@@ -55,19 +103,5 @@ public class BaseTest {
                 {BrowserType.CHROME},
                 {BrowserType.YANDEX}
         });
-    }
-
-    public class PageFactory {
-        public LoginPage createLoginPage() {
-            return new LoginPage(driver);
-        }
-
-        public HomePage createHomePage() {
-            return new HomePage(driver);
-        }
-
-        public ProfilePage createProfilePage() {
-            return new ProfilePage(driver);
-        }
     }
 }
