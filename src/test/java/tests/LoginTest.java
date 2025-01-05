@@ -29,7 +29,7 @@ public class LoginTest extends BaseTest {
     public void testLoginWithHomePageAccountButton() {
         profilePageEnterToAccount();
 
-        testUserSuccessfulLogin();
+        userSuccessfulLogin();
     }
 
     @Step("На главной странице нажать \"Войти в аккаунт\"")
@@ -42,7 +42,7 @@ public class LoginTest extends BaseTest {
     public void testLoginWithProfileButton() {
         clickProfilePageButton();
 
-        testUserSuccessfulLogin();
+        userSuccessfulLogin();
     }
 
     @Test
@@ -63,39 +63,32 @@ public class LoginTest extends BaseTest {
         getLoginPage().goToRegisterPage();
     }
 
-    @Test
-    @DisplayName("вход через кнопку «Личный кабинет»")
-    public void testLoginWithRecoverPassword() {
-        clickProfilePageButton();
-
-        testUserSuccessfulLogin();
-    }
-
     @Step("Нажатие кнопки \"Личный кабинет\"")
     private void clickProfilePageButton() {
         getHomePage().goToAccountPage();
     }
 
     @Step("Вход с тестовым пользователем")
-    public void testUserSuccessfulLogin() {
+    public void userSuccessfulLogin() {
         tryUserLogin(testLogin);
 
         getLoginPage().waitForPurchase();
     }
 
     @Test
-    public void testGoToForgotPasswordPage() {
+    @DisplayName("вход через кнопку в форме восстановления пароля")
+    public void testLoginWithRecoverPassword() {
         clickProfilePageButton();
 
-        testUserLoginWithEmptyPassword();
+        userLoginWithEmptyPassword();
 
         clickUserLoginForgotPasswordLogin();
 
-        testUserSuccessfulLogin();
+        userSuccessfulLogin();
     }
 
     @Step("Вход с тестовым пользователем с пустым паролем")
-    public void testUserLoginWithEmptyPassword() {
+    public void userLoginWithEmptyPassword() {
         tryUserLogin(new Login(testLogin.getEmail(), ""));
 
         getLoginPage().waitForForgotPassword();
