@@ -38,13 +38,6 @@ public class RegistrationTest extends BaseTest {
         checkIfHomePageHasPurchase();
     }
 
-    @Step("Проверить доступность кнопки \"Оформить заказ\"")
-    private void checkIfHomePageHasPurchase() {
-        getRegistrationPage().goToHomePage();
-
-        getHomePage().waitForPurchase();
-    }
-
     @Test
     @Step("Проверка ошибки для некорректного (короткого) пароля")
     public void testPasswordTooShort() {

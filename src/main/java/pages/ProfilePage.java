@@ -19,6 +19,8 @@ public class ProfilePage extends AbstractBasePage {
     private final By fillingsButton = By.xpath("//span[@class='text text_type_main-default'][text()='Начинки']");
     private final By activityTopping = By.xpath("//div[starts-with(@class,'tab_tab__1SPyG tab_tab_type_current__2BEPc')]//span");
 
+    private final By profileText = By.xpath(".//p[text() = 'В этом разделе вы можете изменить свои персональные данные']");
+
     //картинка с "Булкой" для проверки видимости раздела
     public By bunsImg = By.xpath(".//img[@alt='Краторная булка N-200i']");
     //текст заголовка "Булки" для проверки видимости раздела
@@ -51,6 +53,7 @@ public class ProfilePage extends AbstractBasePage {
     public boolean isAccountButtonVisible() {
         return isElementPresent(accountButton);
     }// Переход на страницу профиля (Личный кабинет)
+
     public void goToAccountPage() {
         clickElement(accountButton);
     }
@@ -63,6 +66,10 @@ public class ProfilePage extends AbstractBasePage {
     // Переход в конструктор
     public void goToConstructor() {
         clickElement(constructorButton);
+    }
+
+    public void waitForProfileText() {
+        waitForVisibility(profileText);
     }
 
     // Переход на раздел "Булки"

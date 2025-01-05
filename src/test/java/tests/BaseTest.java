@@ -1,9 +1,11 @@
 package tests;
 
+import api.Base;
 import data.Login;
 import data.User;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
@@ -27,6 +29,7 @@ public class BaseTest {
     private static final String APP_USER = "преображенская_11@gmail.com";
     private static final String APP_PASSWORD = "123456789";
 
+    // todo switch to testUser with random data
     protected static Login testLogin = new Login(APP_USER, APP_PASSWORD);
 
     protected String authToken;
@@ -40,6 +43,7 @@ public class BaseTest {
     private RegistrationPage registrationPage;
     private ProfilePage profilePage;
     private ForgotPasswordPage forgotPasswordPage;
+    private ConstructorPage constructorPage;
 
     public BaseTest(BrowserType browserType) {
         this.browserType = browserType;
@@ -48,6 +52,8 @@ public class BaseTest {
     @Before
     public void setUp() {
         initDriver(this.browserType);
+
+        RestAssured.baseURI = Base.API_URL;
     }
 
     @Step("Инициализация драйвера, браузер: {0}")
@@ -64,7 +70,12 @@ public class BaseTest {
         String password = RandomStringUtils.randomAlphanumeric(8, 15);  // стандартный пароль
         String email = RandomStringUtils.randomAlphanumeric(8, 15).toLowerCase() + "@yandex.ru";  // email пользователя
 
-        return new User(email, password, username);
+        return new User(username, email, password);
+    }
+
+    @Step("Нажатие кнопки \"Личный кабинет\"")
+    protected void clickProfilePageButton() {
+        getHomePage().goToAccountPage();
     }
 
     @Step("Регистрация пользователя: {0}")
@@ -134,6 +145,13 @@ public class BaseTest {
         getLoginPage().goToRegisterPage();
     }
 
+    @Step("Проверить доступность кнопки \"Оформить заказ\"")
+    protected void checkIfHomePageHasPurchase() {
+        getRegistrationPage().goToHomePage();
+
+        getHomePage().waitForPurchase();
+    }
+
     protected void tryUserLogin(Login login) {
         // Вводим правильные данные для входа
         getLoginPage().enterEmail(login.getEmail());
@@ -183,6 +201,13 @@ public class BaseTest {
             forgotPasswordPage = new ForgotPasswordPage(driver);
         }
         return forgotPasswordPage;
+    }
+
+    public ConstructorPage getConstructorPage() {
+        if (constructorPage == null) {
+            constructorPage = new ConstructorPage(driver);
+        }
+        return constructorPage;
     }
 
     @Parameterized.Parameters(name = "Запуск в браузере {0}")
