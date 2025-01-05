@@ -5,23 +5,40 @@ import org.openqa.selenium.WebDriver;
 
 public class ConstructorPage extends AbstractBasePage {
 
-    private By bunsSection = By.id("buns");
-    private By saucesSection = By.id("sauces");
-    private By fillingsSection = By.id("fillings");
+    private By bunsSection = By.xpath(".//div/span[text() = 'Булки']");
+    private By saucesSection = By.xpath(".//div/span[text() = 'Соусы']");
+    private By fillingsSection = By.xpath(".//div/span[text() = 'Начинки']");
+
+    private By selectedBunsSection = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text() = 'Булки']");
+    private By selectedSaucesSection = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text() = 'Соусы']");
+    private By selectedFillingsSection = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text() = 'Начинки']");
 
     public ConstructorPage(WebDriver driver) {
         super(driver);
     }
 
-    public void goToBunsSection() {
+    public void selectBuns() {
         clickElement(bunsSection);
     }
 
-    public void goToSaucesSection() {
+    public void selectSauces() {
         clickElement(saucesSection);
     }
 
-    public void goToFillingsSection() {
+    public void selectFillings() {
         clickElement(fillingsSection);
     }
+
+    public void waitForBunsSelection() {
+        waitForVisibility(selectedBunsSection);
+    }
+
+    public void waitForSaucesSelection() {
+        waitForVisibility(selectedSaucesSection);
+    }
+
+    public void waitForFillingsSelection() {
+        waitForVisibility(selectedFillingsSection);
+    }
+
 }

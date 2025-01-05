@@ -80,7 +80,7 @@ public class LoginTest extends BaseTest {
 
     @Step("Вход с тестовым пользователем с коротким (до 6 символов) паролем")
     protected void userLoginWithShortPassword() {
-        tryUserLogin(new Login(testLogin.getEmail(), RandomStringUtils.randomAlphanumeric(0, 6)));
+        tryUserLogin(new Login(testLogin.getEmail(), RandomStringUtils.randomAlphanumeric(1, 6)));
 
         getLoginPage().waitForForgotPassword();
     }

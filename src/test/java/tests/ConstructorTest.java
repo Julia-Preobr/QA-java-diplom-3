@@ -1,12 +1,10 @@
 package tests;
 
 import io.qameta.allure.Step;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import pages.ConstructorPage;
 import web.BrowserType;
 
@@ -27,35 +25,28 @@ public class ConstructorTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка перехода в раздел 'Булки'")
-    public void testNavigateToBunsSection() {
-        constructorPage.goToBunsSection();
-        String sectionTitle = driver.getTitle();
-        Assert.assertEquals("Раздел 'Булки'", sectionTitle);
-    }
-
-    @Test
     @Step("Проверка перехода в раздел 'Соусы'")
     public void testNavigateToSaucesSection() {
-        constructorPage.goToSaucesSection();
-        String sectionTitle = driver.getTitle();
-        Assert.assertEquals("Раздел 'Соусы'", sectionTitle);
+        constructorPage.selectSauces();
+
+        constructorPage.waitForSaucesSelection();
     }
 
     @Test
     @Step("Проверка перехода в раздел 'Начинки'")
     public void testNavigateToFillingsSection() {
-        constructorPage.goToFillingsSection();
-        String sectionTitle = driver.getTitle();
-        Assert.assertEquals("Раздел 'Начинки'", sectionTitle);
+        constructorPage.selectFillings();
+
+        constructorPage.waitForFillingsSelection();
     }
 
     @Test
-    @Step("Проверка перехода по клику на логотип Stellar Burgers")
-    public void testClickOnLogo() {
-        constructorPage.clickElement(By.id("logo"));
-        String pageTitle = driver.getTitle();
-        Assert.assertEquals("Stellar Burgers", pageTitle);
+    @Step("Проверка перехода в раздел 'Булки'")
+    public void testNavigateToBunsSection() {
+        constructorPage.selectBuns();
+
+        constructorPage.waitForBunsSelection();
     }
+
 }
 

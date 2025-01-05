@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 public abstract class AbstractBasePage {
     protected WebDriver driver;
+    protected Actions actions;
 
     protected WebDriverWait wait;
 
@@ -24,6 +26,7 @@ public abstract class AbstractBasePage {
     public AbstractBasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.actions = new Actions(driver);
     }
 
     public WebElement findElement(By locator) {
@@ -35,7 +38,7 @@ public abstract class AbstractBasePage {
     }
 
     public void clickElement(By locator) {
-        findElement(locator).click();
+        actions.moveToElement(findElement(locator)).click().perform();
     }
 
     public void sendKeys(By locator, String text) {
