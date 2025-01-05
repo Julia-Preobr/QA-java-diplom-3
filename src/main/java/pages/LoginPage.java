@@ -17,8 +17,6 @@ public class LoginPage extends AbstractBasePage {
     private final By registerLink = By.xpath(".//a[@href='/register' and text()='Зарегистрироваться']");
     //Ссылка "Восстановить пароль"
     private final By forgotPasswordLink = By.xpath(".//a[@href='/forgot-password' and text()='Восстановить пароль']");
-    //Кнопка "Оформить заказ" есть только у успешно вошедшего пользователя
-    private final By purchaseButton = By.xpath(".//button[text()='Оформить заказ']");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -49,12 +47,12 @@ public class LoginPage extends AbstractBasePage {
         clickElement(forgotPasswordLink);
     }
 
-    // Проверить наличие кнопки "Оформить заказ"
-    public void waitForPurchase() {
-        waitForVisibility(purchaseButton);
+    // Проверить видимость кнопки "Войти"
+    public void waitForLoginButton() {
+        waitForVisibility(loginButton);
     }
 
-    // Проверить наличие кнопки "Оформить заказ"
+    // Проверить видимость кнопки "Восстановить пароль"
     public void waitForForgotPassword() {
         waitForVisibility(forgotPasswordLink);
     }

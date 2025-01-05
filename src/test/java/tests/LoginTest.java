@@ -1,7 +1,6 @@
 package tests;
 
 import data.Login;
-import data.User;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -32,11 +31,6 @@ public class LoginTest extends BaseTest {
         userSuccessfulLogin();
     }
 
-    @Step("На главной странице нажать \"Войти в аккаунт\"")
-    private void profilePageEnterToAccount() {
-        getHomePage().clickToAccountLogin();
-    }
-
     @Test
     @DisplayName("вход через кнопку «Личный кабинет»")
     public void testLoginWithProfileButton() {
@@ -52,27 +46,19 @@ public class LoginTest extends BaseTest {
 
         clickLoginRegisterLink();
 
-        User testUser = new User(
-                getRandomStr(), getRandomStr() + "@yandex.ru", getRandomStr()
-        );
-        testUserRegister(testUser);
-    }
-
-    @Step("Нажатие ссылки \"Зарегистрироваться\"")
-    private void clickLoginRegisterLink() {
-        getLoginPage().goToRegisterPage();
-    }
-
-    @Step("Нажатие кнопки \"Личный кабинет\"")
-    private void clickProfilePageButton() {
-        getHomePage().goToAccountPage();
+        clickRegisterPageLogin();
     }
 
     @Step("Вход с тестовым пользователем")
     public void userSuccessfulLogin() {
         tryUserLogin(testLogin);
 
-        getLoginPage().waitForPurchase();
+        getHomePage().waitForPurchase();
+    }
+
+    @Step("Пройти по ссылке \"Войти\" на форме регистрации")
+    public void clickRegisterPageLogin() {
+        getRegistrationPage().enter();
     }
 
     @Test
@@ -80,16 +66,21 @@ public class LoginTest extends BaseTest {
     public void testLoginWithRecoverPassword() {
         clickProfilePageButton();
 
-        userLoginWithEmptyPassword();
+        userLoginWithShortPassword();
 
         clickUserLoginForgotPasswordLogin();
 
         userSuccessfulLogin();
     }
 
-    @Step("Вход с тестовым пользователем с пустым паролем")
-    public void userLoginWithEmptyPassword() {
-        tryUserLogin(new Login(testLogin.getEmail(), ""));
+    @Step("Нажатие кнопки \"Личный кабинет\"")
+    private void clickProfilePageButton() {
+        getHomePage().goToAccountPage();
+    }
+
+    @Step("Вход с тестовым пользователем с коротким (до 6 символов) паролем")
+    protected void userLoginWithShortPassword() {
+        tryUserLogin(new Login(testLogin.getEmail(), RandomStringUtils.randomAlphanumeric(0, 6)));
 
         getLoginPage().waitForForgotPassword();
     }
@@ -99,15 +90,6 @@ public class LoginTest extends BaseTest {
         getLoginPage().goToForgotPasswordPage();
 
         getForgotPasswordPage().enter();
-    }
-
-    private void tryUserLogin(Login login) {
-        // Вводим правильные данные для входа
-        getLoginPage().enterEmail(login.getEmail());
-        getLoginPage().enterPassword(login.getPassword());
-
-        // Нажимаем кнопку "Войти"
-        getLoginPage().clickLogin();
     }
 
     private String getRandomStr() {

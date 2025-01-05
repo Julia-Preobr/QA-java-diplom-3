@@ -48,11 +48,30 @@ public class BaseTest {
     }
 
     @Step("Регистрация пользователя: {0}")
-    public void testUserRegister(User user) {
+    protected void userRegister(User user) {
         getRegistrationPage().enterEmail(user.getEmail());
         getRegistrationPage().enterPassword(user.getPassword());
         getRegistrationPage().enterName(user.getName());
         getRegistrationPage().clickRegister();
+    }
+
+    @Step("На главной странице нажать \"Войти в аккаунт\"")
+    protected void profilePageEnterToAccount() {
+        getHomePage().clickToAccountLogin();
+    }
+
+    @Step("Нажатие ссылки \"Зарегистрироваться\"")
+    protected void clickLoginRegisterLink() {
+        getLoginPage().goToRegisterPage();
+    }
+
+    protected void tryUserLogin(Login login) {
+        // Вводим правильные данные для входа
+        getLoginPage().enterEmail(login.getEmail());
+        getLoginPage().enterPassword(login.getPassword());
+
+        // Нажимаем кнопку "Войти"
+        getLoginPage().clickLogin();
     }
 
     @After

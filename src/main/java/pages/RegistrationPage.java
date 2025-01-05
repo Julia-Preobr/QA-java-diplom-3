@@ -2,9 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class RegistrationPage extends AbstractBasePage {
 
@@ -21,7 +18,7 @@ public class RegistrationPage extends AbstractBasePage {
     // Текст "Некорректный пароль"
     public final By errorPasswordText = By.xpath(".//p[text()='Некорректный пароль']");
     // Ссылка "Войти"
-    private final By enterLink = By.xpath(".//div/a[@href='/login' and text()='Войти']");
+    private final By enterLink = By.xpath(".//p/a[@href='/login' and text()='Войти']");
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -43,9 +40,8 @@ public class RegistrationPage extends AbstractBasePage {
         clickElement(registerButton);
     }
 
-    public boolean incorrectPasswordEntered() {
-        List<WebElement> elements = findElements(errorPasswordText);
-        return elements == null || elements.isEmpty();
+    public void waitForIncorrectPasswordEntered() {
+        waitForVisibility(errorPasswordText);
     }
 
     public void enter() {
