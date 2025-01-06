@@ -18,15 +18,15 @@ public class ConstructorPage extends AbstractBasePage {
     }
 
     public void selectBuns() {
-        clickElement(bunsSection);
+        displayAndClickElement(bunsSection);
     }
 
     public void selectSauces() {
-        clickElement(saucesSection);
+        displayAndClickElement(saucesSection);
     }
 
     public void selectFillings() {
-        clickElement(fillingsSection);
+        displayAndClickElement(fillingsSection);
     }
 
     public void waitForBunsSelection() {

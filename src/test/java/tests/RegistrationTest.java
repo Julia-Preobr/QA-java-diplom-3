@@ -35,7 +35,7 @@ public class RegistrationTest extends BaseTest {
 
         tryUserLogin(testUser);
 
-        checkIfHomePageHasPurchase();
+        goToHomePageAndWaitForVisiblePurchase();
     }
 
     @Test

@@ -146,7 +146,7 @@ public class BaseTest {
     }
 
     @Step("Проверить доступность кнопки \"Оформить заказ\"")
-    protected void checkIfHomePageHasPurchase() {
+    protected void goToHomePageAndWaitForVisiblePurchase() {
         getRegistrationPage().goToHomePage();
 
         getHomePage().waitForPurchase();

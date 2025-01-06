@@ -9,8 +9,6 @@ public class ProfilePage extends AbstractBasePage {
     private final By loginButton = By.xpath(".//button[text()='Войти']");
     //Логотип "Stellar Burgers"
     private final By logo = By.xpath(".//div/a[@href='/']");
-    //Кнопка "Конструктор"
-    private final By constructorButton = By.xpath(".//p[text()='Конструктор']");
     //Кнопка перехода "Булки"
     private final By bunsButton = By.xpath("//span[@class='text text_type_main-default'][text()='Булки']");
     //Кнопка перехода "Соуса"
@@ -52,20 +50,11 @@ public class ProfilePage extends AbstractBasePage {
     // Проверка наличия кнопки "Личный кабинет"
     public boolean isAccountButtonVisible() {
         return isElementPresent(accountButton);
-    }// Переход на страницу профиля (Личный кабинет)
-
-    public void goToAccountPage() {
-        clickElement(accountButton);
     }
 
     // Проверка наличия логотипа "Stellar Burgers"
     public boolean isLogoVisible() {
         return isElementPresent(logo);
-    }
-
-    // Переход в конструктор
-    public void goToConstructor() {
-        clickElement(constructorButton);
     }
 
     public void waitForProfileText() {

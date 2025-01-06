@@ -21,7 +21,7 @@ public abstract class AbstractBasePage {
     //Кнопка "Конструктор"
     protected final By constructorButton = By.xpath(".//a/p[text()='Конструктор']");
     //Кнопка "Личный кабинет"
-    protected final By accountButton = By.xpath(".//a[@href='/account']");
+    protected final By accountButton = By.xpath(".//a/p[text()='Личный Кабинет']");
 
     public AbstractBasePage(WebDriver driver) {
         this.driver = driver;
@@ -38,6 +38,10 @@ public abstract class AbstractBasePage {
     }
 
     public void clickElement(By locator) {
+        findElement(locator).click();
+    }
+
+    public void displayAndClickElement(By locator) {
         actions.moveToElement(findElement(locator)).click().perform();
     }
 
