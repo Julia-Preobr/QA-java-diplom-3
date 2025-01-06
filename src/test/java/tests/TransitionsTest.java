@@ -77,6 +77,20 @@ public class TransitionsTest extends BaseTest {
         getProfilePage().waitForProfileText();
     }
 
+    @Test
+    @DisplayName("Выход из аккаунта")
+    public void testLogout() {
+        clickProfilePageButton();
+
+        logoutUser();
+    }
+
+    @Step("Нажатие кнопки \"Выход\"")
+    private void logoutUser() {
+        getProfilePage().logout();
+        getLoginPage().waitForLoginButton();
+    }
+
     @After
     public void tearDown() {
         deleteDefinedUser(testUser);

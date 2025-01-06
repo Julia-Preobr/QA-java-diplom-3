@@ -30,8 +30,8 @@ public class ProfilePage extends AbstractBasePage {
     //текст для проверки видимости на главной странице
     public By textBurgerMainPage = By.xpath(".//section/h1[text()='Соберите бургер']");
 
-
-    private By logoutButton = By.id("logout");
+    //кнопка "Выход"
+    private By logoutButton = By.xpath(".//button[text()='Выход']");
 
     public ProfilePage(WebDriver driver) {
         super(driver);
