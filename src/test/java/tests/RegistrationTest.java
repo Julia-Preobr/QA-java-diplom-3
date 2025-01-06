@@ -1,7 +1,7 @@
 package tests;
 
 import data.User;
-import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -17,7 +17,7 @@ public class RegistrationTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка успешной регистрации")
+    @DisplayName("Проверка успешной регистрации")
     public void testSuccessfulRegistration() {
         profilePageEnterToAccount();
 
@@ -39,7 +39,7 @@ public class RegistrationTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка ошибки для некорректного (короткого) пароля")
+    @DisplayName("Проверка ошибки для некорректного (короткого) пароля")
     public void testPasswordTooShort() {
         profilePageEnterToAccount();
 
