@@ -22,6 +22,6 @@ public class User extends Login {
 
     @Override
     public String toString() {
-        return name + " (email: " + getEmail() + ")";
+        return "name: " + name + ", " + super.toString();
     }
 }

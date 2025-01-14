@@ -5,7 +5,7 @@ public class Login {
     private String password;
 
     public Login(String email, String password) {
-        this.email = email;
+        this.email = email == null ? null : email.toLowerCase();
         this.password = password;
     }
 
@@ -26,5 +26,10 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "email: " + email + ", password: " + (password == null ? null : "***");
     }
 }

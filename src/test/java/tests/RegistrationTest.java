@@ -36,6 +36,9 @@ public class RegistrationTest extends BaseTest {
         tryUserLogin(testUser);
 
         goToHomePageAndWaitForVisiblePurchase();
+        loginUser(testUser);
+
+        deleteDefinedUser();
     }
 
     @Test

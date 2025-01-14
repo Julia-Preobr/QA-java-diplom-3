@@ -93,7 +93,7 @@ public class TransitionsTest extends BaseTest {
 
     @After
     public void tearDown() {
-        deleteDefinedUser(testUser);
+        deleteDefinedUser();
 
         super.tearDown();
     }

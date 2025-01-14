@@ -1,6 +1,7 @@
 package tests;
 
 import data.Login;
+import data.User;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -13,6 +14,7 @@ import web.BrowserType;
 
 @RunWith(Parameterized.class)
 public class LoginTest extends BaseTest {
+    private User testUser;
 
     public LoginTest(BrowserType browserType) {
         super(browserType);
@@ -21,6 +23,13 @@ public class LoginTest extends BaseTest {
     @Before
     public void setUp() {
         super.setUp();
+
+        testUser = new User(
+                RandomStringUtils.randomAlphanumeric(8, 15),
+                RandomStringUtils.randomAlphabetic(8, 12) + "@yandex.ru",
+                RandomStringUtils.randomAlphanumeric(8, 15)
+        );
+        createDefinedUser(testUser);
     }
 
     @Test
@@ -51,7 +60,7 @@ public class LoginTest extends BaseTest {
 
     @Step("Вход с тестовым пользователем")
     public void userSuccessfulLogin() {
-        tryUserLogin(testLogin);
+        tryUserLogin(testUser);
 
         getHomePage().waitForPurchase();
     }
@@ -75,7 +84,7 @@ public class LoginTest extends BaseTest {
 
     @Step("Вход с тестовым пользователем с коротким (до 6 символов) паролем")
     protected void userLoginWithShortPassword() {
-        tryUserLogin(new Login(testLogin.getEmail(), RandomStringUtils.randomAlphanumeric(1, 6)));
+        tryUserLogin(new Login(testUser.getEmail(), RandomStringUtils.randomAlphanumeric(1, 6)));
 
         getLoginPage().waitForForgotPassword();
     }
@@ -93,6 +102,7 @@ public class LoginTest extends BaseTest {
 
     @After
     public void tearDown() {
+        deleteDefinedUser();
         super.tearDown();
     }
 }
