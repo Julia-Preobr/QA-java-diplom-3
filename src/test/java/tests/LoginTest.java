@@ -2,6 +2,7 @@ package tests;
 
 import data.Login;
 import data.User;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,6 +35,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
+    @Description("вход по кнопке «Войти в аккаунт» на главной")
     public void testLoginWithHomePageAccountButton() {
         profilePageEnterToAccount();
 
@@ -42,6 +44,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("вход через кнопку «Личный кабинет»")
+    @Description("вход через кнопку «Личный кабинет»")
     public void testLoginWithProfileButton() {
         clickProfilePageButton();
 
@@ -50,6 +53,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("вход через кнопку в форме регистрации")
+    @Description("вход через кнопку в форме регистрации")
     public void testGoToRegisterPage() {
         clickProfilePageButton();
 
@@ -72,6 +76,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("вход через кнопку в форме восстановления пароля")
+    @Description("вход через кнопку в форме восстановления пароля")
     public void testLoginWithRecoverPassword() {
         clickProfilePageButton();
 

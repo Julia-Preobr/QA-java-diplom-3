@@ -1,6 +1,7 @@
 package tests;
 
 import data.User;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
@@ -39,12 +40,14 @@ public class TransitionsTest extends BaseTest {
 
     @Test
     @DisplayName("Проверка перехода по клику на \"Личный кабинет\"")
+    @Description("Проверка перехода по клику на \"Личный кабинет\"")
     public void testNavigateWithProfileButton() {
         goToUserProfile();
     }
 
     @Test
     @DisplayName("Переход из личного кабинета в конструктор (по кнопке \"Конструктор\")")
+    @Description("Переход из личного кабинета в конструктор (по кнопке \"Конструктор\")")
     public void testNavigateFromProfileToConstructor1() {
         goToUserProfile();
 
@@ -59,6 +62,7 @@ public class TransitionsTest extends BaseTest {
 
     @Test
     @DisplayName("Переход из личного кабинета в конструктор (по клику на логотип \"Stellar Burgers\")")
+    @Description("Переход из личного кабинета в конструктор (по клику на логотип \"Stellar Burgers\")")
     public void testNavigateFromProfileToConstructor2() {
         goToUserProfile();
 
@@ -79,6 +83,7 @@ public class TransitionsTest extends BaseTest {
 
     @Test
     @DisplayName("Выход из аккаунта")
+    @Description("Выход из аккаунта")
     public void testLogout() {
         clickProfilePageButton();
 
@@ -98,4 +103,3 @@ public class TransitionsTest extends BaseTest {
         super.tearDown();
     }
 }
-

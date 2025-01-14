@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class ConstructorTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка перехода в раздел 'Соусы'")
+    @Description("Проверка перехода в раздел 'Соусы'")
     @DisplayName("Проверка перехода в раздел 'Соусы'")
     public void testNavigateToSaucesSection() {
         getConstructorPage().selectSauces();
@@ -24,7 +25,7 @@ public class ConstructorTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка перехода в раздел 'Начинки'")
+    @Description("Проверка перехода в раздел 'Начинки'")
     @DisplayName("Проверка перехода в раздел 'Начинки'")
     public void testNavigateToFillingsSection() {
         getConstructorPage().selectFillings();
@@ -33,7 +34,7 @@ public class ConstructorTest extends BaseTest {
     }
 
     @Test
-    @Step("Проверка перехода в раздел 'Булки'")
+    @Description("Проверка перехода в раздел 'Булки'")
     @DisplayName("Проверка перехода в раздел 'Булки'")
     public void testNavigateToBunsSection() {
         getConstructorPage().selectBuns();
