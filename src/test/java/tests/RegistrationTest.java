@@ -3,6 +3,7 @@ package tests;
 import data.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
@@ -32,6 +33,8 @@ public class RegistrationTest extends BaseTest {
         goToHomePageAndWaitForVisiblePurchase();
         loginUser(testUser);
 
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
+
         deleteDefinedUser();
     }
 
@@ -52,5 +55,10 @@ public class RegistrationTest extends BaseTest {
         userRegister(testUser);
 
         getRegistrationPage().waitForIncorrectPasswordEntered();
+
+        Assert.assertTrue(
+                "Нет ошибки \"Некорректный пароль\"",
+                getRegistrationPage().isIncorrectPasswordEnteredVisible()
+        );
     }
 }

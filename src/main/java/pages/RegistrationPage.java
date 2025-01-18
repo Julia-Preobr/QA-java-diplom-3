@@ -44,6 +44,10 @@ public class RegistrationPage extends AbstractBasePage {
         waitForVisibility(errorPasswordText);
     }
 
+    public boolean isIncorrectPasswordEnteredVisible() {
+        return findElement(errorPasswordText).isDisplayed();
+    }
+
     public void enter() {
         clickElement(enterLink);
     }
