@@ -9,17 +9,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import web.BrowserType;
 
-@RunWith(Parameterized.class)
 public class LoginTest extends BaseTest {
     private User testUser;
-
-    public LoginTest(BrowserType browserType) {
-        super(browserType);
-    }
 
     @Before
     public void setUp() {

@@ -7,17 +7,9 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import web.BrowserType;
 
-@RunWith(Parameterized.class)
 public class TransitionsTest extends BaseTest {
     protected static User testUser;
-
-    public TransitionsTest(BrowserType browserType) {
-        super(browserType);
-    }
 
     @Before
     public void setUp() {

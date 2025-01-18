@@ -11,15 +11,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
+import org.yaml.snakeyaml.Yaml;
 import pages.*;
 import web.BrowserType;
 import web.WebDriverFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Map;
 
 import static org.apache.http.HttpStatus.SC_ACCEPTED;
 import static org.apache.http.HttpStatus.SC_OK;
@@ -41,12 +42,10 @@ public class BaseTest {
     private ForgotPasswordPage forgotPasswordPage;
     private ConstructorPage constructorPage;
 
-    public BaseTest(BrowserType browserType) {
-        this.browserType = browserType;
-    }
-
     @Before
     public void setUp() {
+        readProperties("tests.yml");
+
         initDriver(this.browserType);
 
         RestAssured.baseURI = Base.API_URL;
@@ -57,6 +56,23 @@ public class BaseTest {
         driver = WebDriverFactory.createDriver(browserType);
         driver.get("https://stellarburgers.nomoreparties.site/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
+    @Step("Получаем параметры тестов: {0}")
+    protected void readProperties(String fileName) {
+        Yaml yaml = new Yaml();
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName)) {
+            Map<String, Object> properties = yaml.load(is);
+            Map<String, Object> browserMap = (Map<String, Object>) properties.get("browser");
+            if (browserMap != null) {
+                Object browserType = browserMap.get("type");
+                if (browserType != null) {
+                    this.browserType = BrowserType.valueOf(browserType.toString());
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Step("Генерация данных уникального пользователя")
@@ -206,13 +222,5 @@ public class BaseTest {
             constructorPage = new ConstructorPage(driver);
         }
         return constructorPage;
-    }
-
-    @Parameterized.Parameters(name = "Запуск в браузере {0}")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {BrowserType.CHROME},
-                {BrowserType.YANDEX}
-        });
     }
 }

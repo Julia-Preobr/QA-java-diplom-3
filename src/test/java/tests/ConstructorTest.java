@@ -1,19 +1,10 @@
 package tests;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import web.BrowserType;
 
-@RunWith(Parameterized.class)
 public class ConstructorTest extends BaseTest {
-
-    public ConstructorTest(BrowserType browserType) {
-        super(browserType);
-    }
 
     @Test
     @Description("Проверка перехода в раздел 'Соусы'")

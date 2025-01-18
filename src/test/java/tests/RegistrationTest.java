@@ -4,18 +4,10 @@ import data.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import web.BrowserType;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
-@RunWith(Parameterized.class)
 public class RegistrationTest extends BaseTest {
-
-    public RegistrationTest(BrowserType browserType) {
-        super(browserType);
-    }
 
     @Test
     @DisplayName("Проверка успешной регистрации")
