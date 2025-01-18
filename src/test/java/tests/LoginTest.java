@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,6 +33,8 @@ public class LoginTest extends BaseTest {
         profilePageEnterToAccount();
 
         userSuccessfulLogin();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Test
@@ -41,6 +44,8 @@ public class LoginTest extends BaseTest {
         clickProfilePageButton();
 
         userSuccessfulLogin();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Test
@@ -52,6 +57,10 @@ public class LoginTest extends BaseTest {
         clickLoginRegisterLink();
 
         clickRegisterPageLogin();
+
+        userSuccessfulLogin();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Step("Вход с тестовым пользователем")
@@ -77,6 +86,8 @@ public class LoginTest extends BaseTest {
         clickUserLoginForgotPasswordLogin();
 
         userSuccessfulLogin();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Step("Вход с тестовым пользователем с коротким (до 6 символов) паролем")
@@ -91,10 +102,6 @@ public class LoginTest extends BaseTest {
         getLoginPage().goToForgotPasswordPage();
 
         getForgotPasswordPage().enter();
-    }
-
-    private String getRandomStr() {
-        return RandomStringUtils.randomAlphanumeric(8, 15);
     }
 
     @After

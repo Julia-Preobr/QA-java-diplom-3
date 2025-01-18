@@ -19,8 +19,13 @@ public class HomePage extends AbstractBasePage {
         clickElement(loginToAccountButton);
     }
 
-    // Проверить наличие кнопки "Оформить заказ"
+    // Дождаться появления кнопки "Оформить заказ"
     public void waitForPurchase() {
         waitForVisibility(purchaseButton);
+    }
+
+    // Проверить наличие кнопки "Оформить заказ"
+    public boolean isPurchaseButtonAvailable() {
+        return findElement(purchaseButton).isDisplayed();
     }
 }
