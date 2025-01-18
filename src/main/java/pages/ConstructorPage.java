@@ -29,6 +29,18 @@ public class ConstructorPage extends AbstractBasePage {
         displayAndClickElement(fillingsSection);
     }
 
+    public boolean isBunsSectionVisible() {
+        return findElement(selectedBunsSection).isDisplayed();
+    }
+
+    public boolean isFillingsSectionVisible() {
+        return findElement(selectedFillingsSection).isDisplayed();
+    }
+
+    public boolean isSaucesSectionVisible() {
+        return findElement(selectedSaucesSection).isDisplayed();
+    }
+
     public void waitForBunsSelection() {
         waitForVisibility(selectedBunsSection);
     }

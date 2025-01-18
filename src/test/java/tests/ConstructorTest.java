@@ -2,6 +2,7 @@ package tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ConstructorTest extends BaseTest {
@@ -13,6 +14,8 @@ public class ConstructorTest extends BaseTest {
         getConstructorPage().selectSauces();
 
         getConstructorPage().waitForSaucesSelection();
+
+        Assert.assertTrue("Раздел \"Соусы\" невидима", getConstructorPage().isSaucesSectionVisible());
     }
 
     @Test
@@ -22,6 +25,8 @@ public class ConstructorTest extends BaseTest {
         getConstructorPage().selectFillings();
 
         getConstructorPage().waitForFillingsSelection();
+
+        Assert.assertTrue("Раздел \"Начинки\" невидима", getConstructorPage().isFillingsSectionVisible());
     }
 
     @Test
@@ -31,6 +36,8 @@ public class ConstructorTest extends BaseTest {
         getConstructorPage().selectBuns();
 
         getConstructorPage().waitForBunsSelection();
+
+        Assert.assertTrue("Раздел \"Булки\" невидима", getConstructorPage().isBunsSectionVisible());
     }
 
 }
