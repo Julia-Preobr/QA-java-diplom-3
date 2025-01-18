@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,6 +29,8 @@ public class TransitionsTest extends BaseTest {
     private void loginWithTestUser(User user) {
         tryUserLogin(user);
         goToHomePageAndWaitForVisiblePurchase();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Test
@@ -35,6 +38,11 @@ public class TransitionsTest extends BaseTest {
     @Description("Проверка перехода по клику на \"Личный кабинет\"")
     public void testNavigateWithProfileButton() {
         goToUserProfile();
+
+        Assert.assertTrue(
+                "Нет видно текста \"В этом разделе вы можете изменить свои персональные данные\"",
+                getProfilePage().isProfileTextVisible()
+        );
     }
 
     @Test
@@ -44,6 +52,8 @@ public class TransitionsTest extends BaseTest {
         goToUserProfile();
 
         navigateToConstructor1();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Step("Переход в \"Конструктор\" по кнопке \"Конструктор\"")
@@ -59,6 +69,8 @@ public class TransitionsTest extends BaseTest {
         goToUserProfile();
 
         navigateToConstructor2();
+
+        Assert.assertTrue("Нет кнопки \"Оформить заказ\"", getHomePage().isPurchaseButtonAvailable());
     }
 
     @Step("Переход в \"Конструктор\" по клику на логотип \"Stellar Burgers\"")
@@ -80,6 +92,8 @@ public class TransitionsTest extends BaseTest {
         clickProfilePageButton();
 
         logoutUser();
+
+        Assert.assertTrue("Нет кнопки \"Войти\"", getLoginPage().isLoginButtonVisible());
     }
 
     @Step("Нажатие кнопки \"Выход\"")

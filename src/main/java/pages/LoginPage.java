@@ -56,4 +56,8 @@ public class LoginPage extends AbstractBasePage {
     public void waitForForgotPassword() {
         waitForVisibility(forgotPasswordLink);
     }
+
+    public boolean isLoginButtonVisible() {
+        return findElement(loginButton).isDisplayed();
+    }
 }

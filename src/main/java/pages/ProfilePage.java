@@ -61,6 +61,10 @@ public class ProfilePage extends AbstractBasePage {
         waitForVisibility(profileText);
     }
 
+    public boolean isProfileTextVisible() {
+        return findElement(profileText).isDisplayed();
+    }
+
     // Переход на раздел "Булки"
     public void goToBunsSection() {
         clickElement(bunsButton);
